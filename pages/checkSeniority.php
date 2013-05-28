@@ -9,7 +9,7 @@ if(gettype($info['emailId'])!='NULL'){
 	
 	$year = (int)$info['year'];
 	if($year>2){
-		$query1 = mysql_query("SELECT * FROM userStatus");
+		$query1 = mysql_query("SELECT DISTINCT emailId FROM userStatus");
 		while($info1 = mysql_fetch_array($query1)){
 			$divId = preg_replace('/[@.]/s', '',$info1['emailId']);
 			$data.="<div id = '".$divId."'><a href='javascript:void' id='".$divId."link' onclick =\"listStatuses('".$info1['emailId']."')\">".$info1['emailId']."</a><div id='".$divId."Statuses'></div>";		

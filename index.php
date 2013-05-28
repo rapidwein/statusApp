@@ -19,7 +19,9 @@
 
 <script type='text/javascript'>
        var statusArray = new Array();
+        var taskArray = new Array();
 	var timeArray = new Array();
+	var showArray = new Array();
  function statusHide(emailId){
 	
                 var divId = emailId.replace(/[@.]/g,"");
@@ -33,14 +35,18 @@
 				type : 'post',
 				data : {'emailId' : emailId} ,
 				success:function(data){
-					statusArray = data.split(';');
+					showArray = data.split("%");console.log(showArray[0]);
+					for(i=0;i<showArray.length-1;i++){
+					taskArray = showArray[i].split("&");
+					console.log(taskArray[1]);
+					statusArray = taskArray[1].split(';');
 					 $('#'+divId+"Statuses").append("<br/><table align = 'center' id='"+divId+"Table'></table>");
-					$('#'+divId+"Table").append("<tr><td align='center'><pre>Status</pre></td><td align='center'><pre>Time</pre></td></tr>");
-                                	for(var i=0;i<statusArray.length;i++){
-							timeArray = statusArray[i].split("#");
-							$('#'+divId+"Table").append("<tr><td align='center'><pre>"+timeArray[0]+"</pre></td><td align='center'><pre>"+timeArray[1]+"</pre></td></tr>");
+					$('#'+divId+"Table").append("<tr><td align='center'><pre>Status</pre></td><td align='center'><pre>Time</pre></td><td align='center'><pre>Task</pre></td></tr>");
+                                	for(var j=0;j<statusArray.length;j++){
+							timeArray = statusArray[j].split("#");
+							$('#'+divId+"Table").append("<tr><td align='center'><pre>"+timeArray[0]+"</pre></td><td align='center'><pre>"+timeArray[1]+"</pre></td><td align='center'><pre>"+taskArray[0]+"</pre></td></tr>");
 						}		
-				
+				}
 					$('#'+divId+"Statuses").append("<div align='center'><input name='giveTask' type='text' placeholder = 'Assign Task'/><button id='assign'>Assign</button></div><div id='taskMessage'></div><br/><br/>");
 				  document.getElementById(divId+"link").onclick = function(){statusHide(emailId);} 
 	                	  document.getElementById("assign").onclick = function(){assignTask(emailId);}
