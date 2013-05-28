@@ -87,8 +87,47 @@
 	});
 }
 function minorYear(){
-	$('#statusDiv').append("<br/><br/><div>What's your curent status ? <input id = 'curStatus' type ='text' /><button id='submit' onclick = 'uploadStatus()'>Submit</button></div><br/><div id ='message'></div>");
+		$.ajax({
+			url : 'pages/givenTask.php',
+			type : 'get' ,
+			success : function(data){
+					console.log(data);
+				taskArray = data.split(";");
+				$('#taskDiv').append("<br/><h2 align='center'>Assigned Tasks</h2><br/>");
+				for(i=0;i<taskArray.length-1;i++){
+					$('#taskDiv').append("<div align='center'><a href='javascript:void' id='"+encodeURI(taskArray[i])+"link'>"+taskArray[i]+"</a><br/><div id='"+encodeURI(taskArray[i])+"check'></div></div><br/>");
+				document.getElementById(encodeURI(taskArray[i])+"link").onclick=function(){taskClick(encodeURI(taskArray[i]));}
+				console.log(encodeURI(taskArray[i]));
+				}
+			}
+		});
+	
 	listCurrentStatus();
+}
+ function taskClick(curTask){
+		console.log(curTask);
+		curTask = decodeURI(curTask);
+	console.log(curTask);
+		$('#'+encodeURI(curTask)+"check").append("Have You completed the task?<br/><input type='radio' id='yes'>Yes<br/><input type='radio' id='no'>No<br/>");
+//	document.getElementById('yes').setAttribute("onclick","completedYes(encodeURI(curTask))");
+//	document.getElementById('no').setAttribute("onclick","completedNo(encodeURI(curTask))");
+} 
+ function completedYes(curTask){
+						curTask=decodeURI(curTask);
+  						$.ajax({
+                                                        url : 'pages/taskComplete.php',
+                                                        type : 'post',
+                                                        data : {'task' : encodeURI(curTask)},
+                                                        success : function(){
+                                                                        $('#'+curTask+"link").bind('click',false);
+                                                                }
+                                                });
+}
+ function completedNo(curTask){
+  curTask = decodeURI(curTask);
+  $('#statusDiv').append("<br/><br/><div>Whats your curent status ? <input id = 'curStatus' type ='text' /><button id='submit'>Submit</button></div><br/><div id ='message'></div>");
+                                        document.getElementById("submit").onclick = uploadStatus(encodeURI(curTask));
+
 }
  function listCurrentStatus(){
 		$.ajax({
@@ -105,7 +144,8 @@ function minorYear(){
         });
 
 	}
- function uploadStatus(){
+ function uploadStatus(curTask){
+	curTask = decodeURI(curTask);
 	console.log($('#curStatus').val());
 var statusValue = encodeURI($('#curStatus').val());
 			$.ajax({
@@ -192,6 +232,7 @@ var statusValue = encodeURI($('#curStatus').val());
 if($loggedIn!=1)
 	echo "<!-- Registration Modal --><div style='float:left' id='registrationStyle' align='center'><h2>Registration</h2><div class='logReg' id='regForm'><table id='regFormDetails'><tr> <td class='inputFields'> First Name </td> <td class='inputValues'><input name='firstName' type='text' /> </td> </tr><tr> <td class='inputFields'> Last Name </td> <td class='inputValues'><input name='lastName' type='text' /> </td> </tr><tr> <td class='inputFields'> Email Id </td> <td class='inputValues'><input name='emailId' type='email' /> </td> </tr><tr><td class='inputFields'>Choose Password</td><td class='inputValues'><input name='regPassword' type='password' /></td></tr><tr><td class='inputFields'>Confirm Password</td><td class='inputValues'><input name='confPassword' type='password' /></td></tr><tr><td class='inputFields'>Year</td><td class='inputValues'><select id='year'><option value=''></option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option></select></td></tr></table><button onclick='registration()'>Register</button></div><div id='errorMessage'></div></div><!-- Login Modal --><div align='center' style='float:right' id='loginStyle'><h2>Login</h2><div class='logReg' id='loginForm'><div><input name='username' type='text' placeholder='Username' /><br/><input name='password' type='password' placeholder='Password' /></div><button onclick='login()'>Login</button><div id='loginErrorMessage'></div></div>";
 ?>
+<div id='taskDiv'></div>
 <div id = 'statusDiv'></div>
 <div id='userDataList'></div>
 </body>
