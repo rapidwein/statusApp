@@ -1,0 +1,44 @@
+.logReg input{
+	width: 250px;
+}
+
+form {
+	padding: 0;
+}
+
+#myModalRegister{
+	width: 500px;
+	margin-left:-240px;
+}
+
+#regFormDetails input{
+	width: 220px;
+	margin-left:5px;
+}
+
+#regFormDetails select{
+    width: 150px;
+	margin-left:5px;
+}
+
+.inputFields{
+	padding-bottom: 10px;
+	vertical-align:text-middle;
+	text-align: right;
+	width: 150px;
+}
+
+.inputValues{
+	width: 220px;	
+}
+
+#publishForm input[type=text]{
+	width: 70px;
+	height: 22px;
+	vertical-align:text-top;
+}
+
+#publishForm td{
+	padding: 3px; 
+}
+
