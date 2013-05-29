@@ -94,42 +94,62 @@ function minorYear(){
 					console.log(data);
 				taskArray = data.split(";");
 				$('#taskDiv').append("<br/><h2 align='center'>Assigned Tasks</h2><br/>");
-				for(i=0;i<taskArray.length-1;i++){
+				if(data!=''){
+					for(i=0;i<taskArray.length-1;i++){
 					$('#taskDiv').append("<div align='center'><a href='javascript:void' id='"+encodeURI(taskArray[i])+"link'>"+taskArray[i]+"</a><br/><div id='"+encodeURI(taskArray[i])+"check'></div></div><br/>");
-				document.getElementById(encodeURI(taskArray[i])+"link").onclick=function(){taskClick(encodeURI(taskArray[i]));}
 				console.log(encodeURI(taskArray[i]));
+				document.getElementById(encodeURI(taskArray[i])+"link").onclick=taskClick(encodeURI(taskArray[i]));
+				console.log(encodeURI(taskArray[i]));
+				              //  document.getElementById(encodeURI(taskArray[i])+'check').innerHTML="Have You completed the task?<br/><input type='radio' name='"+encodeURI(taskArray[i])+"yes'>Yes<br/><input type='radio' name='"+encodeURI(taskArray[i])+"no'>No<br/>";
+ //document.getElementById(encodeURI(taskArray[i])+'check').style.display = "none";
+					}
 				}
+				else
+					$('#taskDiv').append("<div align='center'>You have no tasks assigned</div>");
 			}
 		});
 	
-	listCurrentStatus();
+//	listCurrentStatus();
 }
  function taskClick(curTask){
-		console.log(curTask);
-		curTask = decodeURI(curTask);
-	console.log(curTask);
-		$('#'+encodeURI(curTask)+"check").append("Have You completed the task?<br/><input type='radio' id='yes'>Yes<br/><input type='radio' id='no'>No<br/>");
-//	document.getElementById('yes').setAttribute("onclick","completedYes(encodeURI(curTask))");
-//	document.getElementById('no').setAttribute("onclick","completedNo(encodeURI(curTask))");
+		var temp = curTask+"check";
+	//	 document.getElementById(curTask+'check').style.display = "block";
+                                                document.getElementById(curTask+'check').innerHTML="Have You completed the task?<br/><input type='radio' name='"+curTask+"yes'>Yes<br/><input type='radio' name='"+curTask+"no'>No<br/>";
+
+	var temp1 = document.getElementsByName(curTask+"yes");
+	var temp2 = document.getElementsByName(curTask+"no");
+	$(temp1).click(function(){completedYes(curTask)});
+        $(temp2).click(function(){completedNo(curTask)});
+
+	//document.getElementById('no').onclick=completedNo(curTask);
 } 
  function completedYes(curTask){
-						curTask=decodeURI(curTask);
-  						$.ajax({
+	                                        $('#taskDiv').append("<div align='center'>You have no tasks assigned</div>");
+
+  						console.log(curTask);
+						$.ajax({
                                                         url : 'pages/taskComplete.php',
                                                         type : 'post',
-                                                        data : {'task' : encodeURI(curTask)},
+                                                        data : {'task' : curTask},
                                                         success : function(){
-                                                                        $('#'+curTask+"link").bind('click',false);
+									var temp = document.getElementById(curTask+"link");
+                                                                        var temp1 = document.getElementById(curTask+"check");
+ 									$(temp1).empty();
+								       $(temp).empty();
                                                                 }
                                                 });
 }
  function completedNo(curTask){
-  curTask = decodeURI(curTask);
-  $('#statusDiv').append("<br/><br/><div>Whats your curent status ? <input id = 'curStatus' type ='text' /><button id='submit'>Submit</button></div><br/><div id ='message'></div>");
-                                        document.getElementById("submit").onclick = uploadStatus(encodeURI(curTask));
+  console.log(curTask);
+  
+  document.getElementById(curTask+"check").innerHTML="<br/><br/><div>Whats your curent status ? <input id = '"+curTask+"curStatus' type ='text' /><button id='"+curTask+"submit'>Submit</button></div><br/><div id ='"+curTask+"message'></div>";
+                                   var temp=document.getElementById(curTask+"submit");
+					console.log(temp);
+					$(temp).click(function(){uploadStatus(curTask);});
 
 }
- function listCurrentStatus(){
+
+/* function listCurrentStatus(){
 		$.ajax({
                 url : 'pages/listCurrentStatus.php',
                 type : 'get',
@@ -143,19 +163,21 @@ function minorYear(){
                 }
         });
 
-	}
+	}*/
  function uploadStatus(curTask){
-	curTask = decodeURI(curTask);
-	console.log($('#curStatus').val());
-var statusValue = encodeURI($('#curStatus').val());
+	var curStatus = document.getElementById(curTask+"curStatus");
+	console.log($('#curStatus').val()+"ASDSAD");
+var statusValue = encodeURI($(curStatus).val());
 			$.ajax({
 			url : 'pages/uploadStatus.php',
 			type : 'post',
-			data : { 'status' : statusValue},
+			data : { 'status' : statusValue, 'task':curTask},
 			success : function(data){
-				$('#message').empty();
-				$('#message').append(data);
-				listCurrentStatus();
+				console.log(data);
+				var temp = document.getElementById(curTask+"message");
+				$(temp).empty();
+				$(temp).append(data);
+				//listCurrentStatus();
 			}
 
 		});
@@ -207,9 +229,9 @@ var statusValue = encodeURI($('#curStatus').val());
 					url : 'pages/logout.php'	
 			});
 			$('#logged').empty();
-			$('#statusDiv').empty();
+			$('#taskDiv').empty();
 			$('#userDataList').empty();
-			$('#logged').append("<div id=''><a href='#myModalRegister' role='button' class='btn btn-primary' data-toggle='modal'> REGISTER </a> <a href='#myModalLogin' role='button' class='btn btn-primary' data-toggle='modal'> LOGIN </a></div>");
+			$('#logged').append("<!-- Registration Modal --><div style='float:left' id='registrationStyle' align='center'><h2>Registration</h2><div class='logReg' id='regForm'><table id='regFormDetails'><tr> <td class='inputFields'> First Name </td> <td class='inputValues'><input name='firstName' type='text' /> </td> </tr><tr> <td class='inputFields'> Last Name </td> <td class='inputValues'><input name='lastName' type='text' /> </td> </tr><tr> <td class='inputFields'> Email Id </td> <td class='inputValues'><input name='emailId' type='email' /> </td> </tr><tr><td class='inputFields'>Choose Password</td><td class='inputValues'><input name='regPassword' type='password' /></td></tr><tr><td class='inputFields'>Confirm Password</td><td class='inputValues'><input name='confPassword' type='password' /></td></tr><tr><td class='inputFields'>Year</td><td class='inputValues'><select id='year'><option value=''></option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option></select></td></tr></table><button onclick='registration()'>Register</button></div><div id='errorMessage'></div></div><!-- Login Modal --><div align='center' style='float:right' id='loginStyle'><h2>Login</h2><div class='logReg' id='loginForm'><div><input name='username' type='text' placeholder='Username' /><br/><input name='password' type='password' placeholder='Password' /></div><button onclick='login()'>Login</button><div id='loginErrorMessage'></div></div>");
 		}
 </script>
 </head>

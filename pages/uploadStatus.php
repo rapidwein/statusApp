@@ -2,19 +2,21 @@
 include_once "config.lib.php";
 $emailId = $_SESSION['emailId'];
 $status = urldecode($_POST['status']);
-$query = "SELECT * FROM userStatus WHERE emailId = '".$emailId."'";
+$task = urldecode($_POST['task']);
+$query = "SELECT * FROM userStatus WHERE emailId = '".$emailId."' AND task = '".$task."'";
 $res = mysql_query($query);
-$info = mysql_fetch_array($res);
-if(gettype($info['emailId'])!='NULL'){
-	if($info['prevStatuses']!='')
-		$query1="UPDATE userStatus SET prevStatuses = '".$info['prevStatuses'].$info['curStatus']."#".$info['timeStamp'].";"."' , curStatus = '".$status."' WHERE emailId = '".$emailId."'";
+while($info = mysql_fetch_array($res)){
+	if($info['curStatus']!='')
+		$query1="UPDATE userStatus SET prevStatuses = '".$info['prevStatuses'].$info['curStatus']."#".$info['timeStamp'].";"."' , curStatus = '".$status."' , timeStamp = now() WHERE emailId = '".$emailId."' AND task='".$task."'";
 	else
-		$query1="UPDATE userStatus SET prevStatuses = '".$info['curStatus']."#".$info['timeStamp'].";"."' , curStatus = '".$status."' WHERE emailId = '".$emailId."'";
+		$query1="UPDATE userStatus SET curStatus = '".$status."' , timeStamp = now() WHERE emailId = '".$emailId."' AND task='".$task."'";
 
 	}	
-else
-$query1 = "INSERT INTO userStatus (emailId,curStatus,prevStatuses) VALUES('".$emailId."','".$status."','')";
+
 $res = mysql_query($query1);
+if($status!='')
 echo "Successfully Updated!";
+else
+echo "";
 exit;
 ?>
