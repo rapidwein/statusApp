@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 29, 2013 at 07:54 PM
+-- Generation Time: May 29, 2013 at 08:02 PM
 -- Server version: 5.5.25
 -- PHP Version: 5.4.4
 
@@ -60,6 +60,6 @@ CREATE TABLE `userStatus` (
 --
 
 INSERT INTO `userStatus` (`emailId`, `curStatus`, `prevStatuses`, `timeStamp`, `task`, `completed`) VALUES
-('rapidwein@gmail.com', 'and i am doing great', 'life is good#2013-05-29 23:21:52;', '2013-05-29 17:52:34', 'how is life', 0),
-('rap@gmail.com', ':) :)', 'No#2013-05-16 16:06:37;its#2013-05-16 16:06:37;Not!#2013-05-16 16:06:37;Period.#2013-05-16 16:06:37;:(#2013-05-16 16:06:37;', '2013-05-16 10:36:37', '', 0),
+('rapidwein@gmail.com', 'nope i was lying', 'life is good#2013-05-29 23:21:52;and i am doing great#2013-05-29 23:22:34;kind of depressed now#2013-05-29 23:27:02;feeling better#2013-05-29 23:28:14;a lot better#2013-05-29 23:29:23;', '2013-05-29 18:01:01', 'how is life', 0),
+('rap@gmail.com', ':) :)', 'No#2013-05-16 16:06:37;its#2013-05-16 16:06:37;Not!#2013-05-16 16:06:37;Period.#2013-05-16 16:06:37;:(#2013-05-16 16:06:37;', '2013-05-16 10:36:37', 'testing your diligence', 0),
 ('rapidwein@gmail.com', 'and verified', 'status uploaded#2013-05-29 23:22:18;', '2013-05-29 17:52:49', 'task assigned', 0);

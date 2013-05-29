@@ -174,6 +174,7 @@ var statusValue = encodeURI($(curStatus).val());
 			data : { 'status' : statusValue, 'task':curTask},
 			success : function(data){
 				console.log(data);
+				curStatus.value='';
 				var temp = document.getElementById(curTask+"message");
 				$(temp).empty();
 				$(temp).append(data);
