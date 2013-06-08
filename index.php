@@ -35,6 +35,7 @@
 				type : 'post',
 				data : {'emailId' : emailId} ,
 				success:function(data){
+					
 					showArray = data.split("%");console.log(showArray[0]);
 					for(i=0;i<showArray.length-1;i++){
 					taskArray = showArray[i].split("&");
@@ -62,16 +63,21 @@
 			type : 'get',
 			success : function(data){
 					console.log(data);
+					if(data!="minor") 
+					$('#userDataList').append("<h4 align='center'>List of Active 2nd Years</h4></br>");
 					if(data!=""){
 						if(data=="minor")
 							minorYear();
 						else{
-							$('#userDataList').append("<h4>List of Active 2nd Years</h4>");
+							
 							$('#userDataList').append(data);
 						
 							
 				}
 			}
+					else{
+                                    		$('#userDataList').append("<div align='center'>No IInd years have registered yet!");
+                                        }
 		}
 	});
 }

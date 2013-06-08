@@ -12,7 +12,7 @@ if(gettype($info['emailId'])!='NULL'){
 		$query1 = mysql_query("SELECT DISTINCT emailId FROM userStatus");
 		while($info1 = mysql_fetch_array($query1)){
 			$divId = preg_replace('/[@.]/s', '',$info1['emailId']);
-			$data.="<div id = '".$divId."'><a href='javascript:void' id='".$divId."link' onclick =\"listStatuses('".$info1['emailId']."')\">".$info1['emailId']."</a><div id='".$divId."Statuses'></div>";		
+			$data.="<div id = '".$divId."' align='center'><a href='javascript:void' id='".$divId."link' onclick =\"listStatuses('".$info1['emailId']."')\">".$info1['emailId']."</a><div id='".$divId."Statuses' align='center'></div>";		
 	}
 	
 		}
