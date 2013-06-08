@@ -1,6 +1,6 @@
 <?php
 include_once "config.lib.php";
-$emailId=$_SESSION['emailId'];
+$emailId=mysql_real_escape_string($_SESSION['emailId']);
 $data = "";
 $query = "SELECT * FROM Users WHERE emailId ='".$emailId."'";
 $res = mysql_query($query);

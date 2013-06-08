@@ -44,6 +44,10 @@
 		$password = md5($password);
 		$query = "INSERT INTO Users (emailId, firstName, lastName , password, year) VALUES ('".$emailId."', '".$firstName."','".$lastName."','".$password."','".$year."')";
 		mysql_query($query);
+		if($year==2){
+			$query1="INSERT INTO userStatus (emailId,curStatus,prevStatuses,task) VALUES('".$emailId."','','','')";
+			$res1=mysql_query($query1);
+		}
 		$_SESSION['emailId'] = $emailId;
 		$_SESSION['views'] = 1;
 		echo "Success!";

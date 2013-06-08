@@ -1,8 +1,8 @@
 <?php
 include_once "config.lib.php";
-$emailId = $_SESSION['emailId'];
-$status = urldecode($_POST['status']);
-$task = urldecode($_POST['task']);
+$emailId = mysql_real_escape_string($_SESSION['emailId']);
+$status = urldecode(mysql_real_escape_string($_POST['status']));
+$task = urldecode(mysql_real_escape_string($_POST['task']));
 $query = "SELECT * FROM userStatus WHERE emailId = '".$emailId."' AND task = '".$task."'";
 $res = mysql_query($query);
 while($info = mysql_fetch_array($res)){

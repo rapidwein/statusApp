@@ -1,7 +1,7 @@
 <?php
 include_once "config.lib.php";
 $data='';
-$emailId=$_SESSION['emailId'];
+$emailId=mysql_real_escape_string($_SESSION['emailId']);
 $query = "SELECT * from userStatus WHERE emailId = '".$emailId."'";
 $res = mysql_query($query);
 $info = mysql_fetch_array($res);
