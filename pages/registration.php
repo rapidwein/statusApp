@@ -10,8 +10,8 @@
 	$password = mysql_real_escape_string($_POST["regPassword"]);
 	$confPassword = mysql_real_escape_string($_POST["confPassword"]);
 	$year = mysql_real_escape_string($_POST["year"]);
-	
-	if(!($firstName&&$lastName&&$emailId&&$password&&$confPassword&&$year)){
+	$department = mysql_real_escape_string($_POST["department"]);
+	if(!($firstName&&$lastName&&$emailId&&$password&&$confPassword&&$year&&$department)){
 		echo "All fields need to filled!";
 		exit;
 	}
@@ -42,7 +42,7 @@
 	}
 	else{
 		$password = md5($password);
-		$query = "INSERT INTO Users (emailId, firstName, lastName , password, year) VALUES ('".$emailId."', '".$firstName."','".$lastName."','".$password."','".$year."')";
+		$query = "INSERT INTO Users (emailId, firstName, lastName , password, year, department) VALUES ('".$emailId."', '".$firstName."','".$lastName."','".$password."','".$year."','".$department."')";
 		mysql_query($query);
 		if($year==2){
 			$query1="INSERT INTO userStatus (emailId,curStatus,prevStatuses,task) VALUES('".$emailId."','','','')";

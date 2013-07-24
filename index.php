@@ -88,6 +88,7 @@
 			type : 'post',
 			data : {'task' : encodeURI($('input[name=giveTask]').val()) , 'emailId' : emailId},
 			success : function(){
+					$('#taskMessage').empty();
 					$('#taskMessage').append("Successfully Assigned");
 		}
 	});
@@ -197,7 +198,7 @@ var statusValue = encodeURI($(curStatus).val());
 		$.ajax({
 			url: './pages/registration.php',
 			type: 'post',
-			data: {'firstName': $('input[name=firstName]').val(), 'lastName': $('input[name=lastName]').val(),'emailId':$('input[name=emailId]').val(), 'regPassword':$('input[name=regPassword]').val(), 'confPassword':$('input[name=confPassword]').val(), 'year': $('#year').val()},
+			data: {'firstName': $('input[name=firstName]').val(), 'lastName': $('input[name=lastName]').val(),'emailId':$('input[name=emailId]').val(), 'regPassword':$('input[name=regPassword]').val(), 'confPassword':$('input[name=confPassword]').val(), 'year': $('#year').val(), 'department': $('#department').val()},
 			success: function(data){
 				if(data=='Success!'){
 					window.location = "./";
@@ -238,19 +239,19 @@ var statusValue = encodeURI($(curStatus).val());
 			$('#logged').empty();
 			$('#taskDiv').empty();
 			$('#userDataList').empty();
-			$('#logged').append("<!-- Registration Modal --><div style='float:left' id='registrationStyle' align='center'><h2>Registration</h2><div class='logReg' id='regForm'><table id='regFormDetails'><tr> <td class='inputFields'> First Name </td> <td class='inputValues'><input name='firstName' type='text' /> </td> </tr><tr> <td class='inputFields'> Last Name </td> <td class='inputValues'><input name='lastName' type='text' /> </td> </tr><tr> <td class='inputFields'> Email Id </td> <td class='inputValues'><input name='emailId' type='email' /> </td> </tr><tr><td class='inputFields'>Choose Password</td><td class='inputValues'><input name='regPassword' type='password' /></td></tr><tr><td class='inputFields'>Confirm Password</td><td class='inputValues'><input name='confPassword' type='password' /></td></tr><tr><td class='inputFields'>Year</td><td class='inputValues'><select id='year'><option value=''></option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option></select></td></tr></table><button onclick='registration()'>Register</button></div><div id='errorMessage'></div></div><!-- Login Modal --><div align='center' style='float:right' id='loginStyle'><h2>Login</h2><div class='logReg' id='loginForm'><div><input name='username' type='text' placeholder='Username' /><br/><input name='password' type='password' placeholder='Password' /></div><button onclick='login()'>Login</button><div id='loginErrorMessage'></div></div>");
+			$('#logged').append("<!-- Registration Modal --><div style='margin-left:-5%' id='registrationStyle' align='center'><h2>Registration</h2><div class='logReg' id='regForm'><table id='regFormDetails'><tr> <td class='inputFields'> First Name </td> <td class='inputValues'><input name='firstName' type='text' /> </td> </tr><tr> <td class='inputFields'> Last Name </td> <td class='inputValues'><input name='lastName' type='text' /> </td> </tr><tr> <td class='inputFields'> Email Id </td> <td class='inputValues'><input name='emailId' type='email' /> </td> </tr><tr><td class='inputFields'>Choose Password</td><td class='inputValues'><input name='regPassword' type='password' /></td></tr><tr><td class='inputFields'>Confirm Password</td><td class='inputValues'><input name='confPassword' type='password' /></td></tr><tr><td class='inputFields'>Year</td><td class='inputValues'><select id='year'><option value=''></option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option></select></td></tr><tr><td class='inputFields'>Department</td><td class='inputValues'><select id='department'><option value=''></option><option value='Dept2'>Dept2</option><option value='Dept3'>Dept3</option><option value='Dept4'>Dept4</option></select></td></tr></table><button onclick='registration()'>Register</button></div><div id='errorMessage'></div></div><!-- Login Modal --><div align='center' style='margin-left:5%' id='loginStyle'><h2>Login</h2><div class='logReg' id='loginForm'><div><input name='username' type='text' placeholder='Username' /><br/><input name='password' type='password' placeholder='Password' /></div><button onclick='login()'>Login</button><div id='loginErrorMessage'></div></div>");
 		}
 </script>
 </head>
-<body>
- <?php
+<body align='center'>
+<?php
 
     if($loggedIn==1 && $_SESSION['views']==1){
-		echo "<div id='logged'>Hello!".$_SESSION['emailId']." <a href='javascript:void' onclick = 'logout()'>Logout</a></div>";
+		echo "<div id='logged'><b>".$_SESSION['emailId']."</b> <a href='javascript:void' style='float:right' onclick = 'logout()'>Logout</a></div>";
 		$_SESSION['views']++;
 		}
 	else if($loggedIn==1 && $_SESSION['views']!=1){
-		echo "<div id='logged'>".$_SESSION['emailId']." <a href='javascript:void' onclick = 'logout()'>Logout</a></div>";
+		echo "<div id='logged'><b>".$_SESSION['emailId']."</b> <a href='javascript:void' style='float:right' onclick = 'logout()' >Logout</a></div>";
 		$_SESSION['views']++;
 			}	
 
@@ -259,7 +260,7 @@ var statusValue = encodeURI($(curStatus).val());
         }
 	
 if($loggedIn!=1)
-	echo "<!-- Registration Modal --><div style='float:left' id='registrationStyle' align='center'><h2>Registration</h2><div class='logReg' id='regForm'><table id='regFormDetails'><tr> <td class='inputFields'> First Name </td> <td class='inputValues'><input name='firstName' type='text' /> </td> </tr><tr> <td class='inputFields'> Last Name </td> <td class='inputValues'><input name='lastName' type='text' /> </td> </tr><tr> <td class='inputFields'> Email Id </td> <td class='inputValues'><input name='emailId' type='email' /> </td> </tr><tr><td class='inputFields'>Choose Password</td><td class='inputValues'><input name='regPassword' type='password' /></td></tr><tr><td class='inputFields'>Confirm Password</td><td class='inputValues'><input name='confPassword' type='password' /></td></tr><tr><td class='inputFields'>Year</td><td class='inputValues'><select id='year'><option value=''></option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option></select></td></tr></table><button onclick='registration()'>Register</button></div><div id='errorMessage'></div></div><!-- Login Modal --><div align='center' style='float:right' id='loginStyle'><h2>Login</h2><div class='logReg' id='loginForm'><div><input name='username' type='text' placeholder='Username' /><br/><input name='password' type='password' placeholder='Password' /></div><button onclick='login()'>Login</button><div id='loginErrorMessage'></div></div>";
+	echo "<!-- Registration Modal --><div style='margin-left:-5%' id='registrationStyle' align='center'><h2>Registration</h2><div class='logReg' id='regForm'><table id='regFormDetails'><tr> <td class='inputFields'> First Name </td> <td class='inputValues'><input name='firstName' type='text' /> </td> </tr><tr> <td class='inputFields'> Last Name </td> <td class='inputValues'><input name='lastName' type='text' /> </td> </tr><tr> <td class='inputFields'> Email Id </td> <td class='inputValues'><input name='emailId' type='email' /> </td> </tr><tr><td class='inputFields'>Choose Password</td><td class='inputValues'><input name='regPassword' type='password' /></td></tr><tr><td class='inputFields'>Confirm Password</td><td class='inputValues'><input name='confPassword' type='password' /></td></tr><tr><td class='inputFields'>Year</td><td class='inputValues'><select id='year'><option value=''></option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option></select></td></tr><tr><td class='inputFields'>Department</td><td class='inputValues'><select id='department'><option value=''></option><option value='Dept2'>Dept2</option><option value='Dept3'>Dept3</option><option value='Dept4'>Dept4</option></select></td></tr></table><button onclick='registration()'>Register</button></div><div id='errorMessage'></div></div><!-- Login Modal --><div align='center' style='margin-left:5%' id='loginStyle'><h2>Login</h2><div class='logReg' id='loginForm'><div><input name='username' type='text' placeholder='Username' /><br/><input name='password' type='password' placeholder='Password' /></div><button onclick='login()'>Login</button><div id='loginErrorMessage'></div></div>";
 ?>
 <div id='taskDiv'></div>
 <div id = 'statusDiv'></div>
